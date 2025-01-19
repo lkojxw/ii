@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detekce Aplikace</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Získání refereru (odkud byl uživatel přesměrován)
+            const referer = document.referrer;
+
+            // Detekce zařízení a aplikace
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isWhatsApp = userAgent.includes("whatsapp");
+            const isEmailApp = userAgent.includes("mail") || referer.includes("mail");
+
+            // Zobrazení obsahu na základě detekce
+            if (referer.includes("whatsapp") || isWhatsApp) {
+                // Obsah pro WhatsApp
+                document.body.innerHTML = `
+                    <h1>Obsah pro WhatsApp</h1>
+                    <p>Tento obsah je optimalizován pro uživatele aplikace WhatsApp.</p>
+                    <ul>
+                        <li>Číslo zákazníka: +420 123 456 789</li>
+                        <li>Zpráva: Vítejte v aplikaci WhatsApp!</li>
+                    </ul>
+                `;
+            } else if (isEmailApp) {
+                // Obsah pro e-mailové aplikace
+                document.body.innerHTML = `
+                    <h1>Obsah pro E-mail</h1>
+                    <p>Tento obsah je optimalizován pro uživatele, kteří otevřeli stránku z e-mailu.</p>
+                    <ul>
+                        <li>Vaše e-mailová adresa: example@email.com</li>
+                        <li>Datum otevření: ${new Date().toLocaleDateString()}</li>
+                    </ul>
+                `;
+            } else {
+                // Pokud není aplikace detekována
+                document.body.innerHTML = `
+                    <h1>Neznámá aplikace</h1>
+                    <p>Nepodařilo se rozpoznat aplikaci, ze které jste stránku otevřeli.</p>
+                `;
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Detekce Aplikace</h1>
+    <p>Tato stránka rozpoznává, zda byla otevřena v aplikaci WhatsApp, e-mailu nebo jinde.</p>
+</body>
+</html>
